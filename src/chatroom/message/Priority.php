@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\chatroom\message;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室消息优先级服务
  */
-
-namespace fize\third\rongcloud\api\chatroom\message;
-
-use fize\third\rongcloud\Api;
-
-class Priority extends Api
+class Priority extends Common
 {
 
     public function add()

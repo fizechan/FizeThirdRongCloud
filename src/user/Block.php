@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\user;
+
+use fize\third\rongcloud\Common;
+
 /**
- * 封禁用户管理API
+ * 封禁用户管理
  */
-
-namespace fize\third\rongcloud\api\user;
-
-use fize\third\rongcloud\Api;
-
-class Block extends Api
+class Block extends Common
 {
 
     /**
@@ -19,7 +19,7 @@ class Block extends Api
         $uri = '/user/block/query';
         $rst = $this->httpPost($uri, []);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

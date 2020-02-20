@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\user;
+
+use fize\third\rongcloud\Common;
+
 /**
- * 用户黑名单服务API
+ * 用户黑名单服务
  */
-
-namespace fize\third\rongcloud\api\user;
-
-use fize\third\rongcloud\Api;
-
-class BlackList extends Api
+class BlackList extends Common
 {
     /**
      * 添加用户到黑名单方法
@@ -19,12 +19,12 @@ class BlackList extends Api
     {
         $uri = '/user/blacklist/add';
         $params = [
-            'userId' => $user_id,
+            'userId'      => $user_id,
             'blackUserId' => $black_user_id
         ];
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -41,12 +41,12 @@ class BlackList extends Api
     {
         $uri = '/user/blacklist/remove';
         $params = [
-            'userId' => $user_id,
+            'userId'      => $user_id,
             'blackUserId' => $black_user_id
         ];
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -66,7 +66,7 @@ class BlackList extends Api
         ];
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\chatroom;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室保活服务
  */
-
-namespace fize\third\rongcloud\api\chatroom;
-
-use fize\third\rongcloud\Api;
-
-class KeepAlive extends Api
+class KeepAlive extends Common
 {
     public function add()
     {

@@ -1,13 +1,11 @@
 <?php
+
+namespace fize\third\rongcloud;
+
 /**
- * 用户服务API
+ * 用户服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use fize\third\rongcloud\Api;
-
-class User extends Api
+class User extends Common
 {
 
     /**
@@ -21,8 +19,8 @@ class User extends Api
     {
         $uri = '/user/getToken';
         $params = [
-            'userId' => $user_id,
-            'name' => $name,
+            'userId'      => $user_id,
+            'name'        => $name,
             'portraitUri' => $portrait_uri
         ];
         return $this->httpPost($uri, $params);
@@ -41,16 +39,16 @@ class User extends Api
         $params = [
             'userId' => $user_id
         ];
-        if(!is_null($name)){
+        if (!is_null($name)) {
             $params['name'] = $name;
         }
-        if(!is_null($portrait_uri)){
+        if (!is_null($portrait_uri)) {
             $params['portraitUri'] = $portrait_uri;
         }
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -80,12 +78,12 @@ class User extends Api
     public function block($user_id, $minute)
     {
         $uri = '/user/block';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = "minute={$minute}";
-            foreach ($user_id as $id){
+            foreach ($user_id as $id) {
                 $params .= "&userId={$id}";
             }
-        }else{
+        } else {
             $params = [
                 'userId' => $user_id,
                 'minute' => $minute
@@ -94,7 +92,7 @@ class User extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -109,10 +107,10 @@ class User extends Api
     public function unblock($user_id)
     {
         $uri = '/user/unblock';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = implode('&userId=', $user_id);
             $params = "userId=" . $params;
-        }else{
+        } else {
             $params = [
                 'userId' => $user_id
             ];
@@ -120,7 +118,7 @@ class User extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 

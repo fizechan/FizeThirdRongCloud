@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\group\user;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 群组成员禁言服务
  */
-
-namespace fize\third\rongcloud\api\group\user;
-
-use fize\third\rongcloud\Api;
-
-class Gag extends Api
+class Gag extends Common
 {
     /**
      * 添加禁言群成员方法
@@ -20,14 +20,14 @@ class Gag extends Api
     {
         $uri = '/group/user/gag/add';
         $params = [
-            'userId' => $user_id,
+            'userId'  => $user_id,
             'groupId' => $group_id,
-            'minute' => $minute
+            'minute'  => $minute
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -44,13 +44,13 @@ class Gag extends Api
     {
         $uri = '/group/user/gag/rollback';
         $params = [
-            'userId' => $user_id,
+            'userId'  => $user_id,
             'groupId' => $group_id
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -68,7 +68,7 @@ class Gag extends Api
         $params = ['groupId' => $group_id];
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\chatroom\user;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室成员禁言服务
  */
-
-namespace fize\third\rongcloud\api\chatroom\user;
-
-use fize\third\rongcloud\Api;
-
-class Ban extends Api
+class Ban extends Common
 {
     /**
      * 添加聊天室全局禁言方法
@@ -18,12 +18,12 @@ class Ban extends Api
     public function add($user_id, $minute)
     {
         $uri = '/chatroom/user/ban/add';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = "minute={$minute}";
-            foreach ($user_id as $id){
+            foreach ($user_id as $id) {
                 $params .= "&userId={$id}";
             }
-        }else{
+        } else {
             $params = [
                 'userId' => $user_id,
                 'minute' => $minute
@@ -32,7 +32,7 @@ class Ban extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -47,16 +47,16 @@ class Ban extends Api
     public function remove($user_id)
     {
         $uri = '/chatroom/user/ban/remove';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = implode('&userId=', $user_id);
             $params = "userId=" . $params;
-        }else{
+        } else {
             $params = ['userId' => $user_id];
         }
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -72,7 +72,7 @@ class Ban extends Api
         $uri = '/chatroom/user/ban/query';
         $rst = $this->httpPost($uri, []);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

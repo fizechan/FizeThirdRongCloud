@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\chatroom;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室消息白名单服务
  */
-
-namespace fize\third\rongcloud\api\chatroom;
-
-use fize\third\rongcloud\Api;
-
-class WhiteList extends Api
+class WhiteList extends Common
 {
     public function add()
     {

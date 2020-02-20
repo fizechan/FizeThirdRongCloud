@@ -1,20 +1,15 @@
 <?php
-/**
- * 融云API基类
- */
 
 namespace fize\third\rongcloud;
 
 use fize\net\Http;
 use fize\crypt\Json;
 
-class Api
+/**
+ * 融云API基类
+ */
+class Common
 {
-
-    /**
-     * @var Http
-     */
-    private $http;
 
     /**
      * @var string
@@ -87,7 +82,6 @@ class Api
     {
         $this->appKey = $app_key;
         $this->appSecret = $app_secret;
-        $this->http = new Http();
     }
 
     /**
@@ -112,22 +106,22 @@ class Api
      */
     private function getSendHeader($rc = false)
     {
-        srand((double)microtime()*1000000); // 重置随机数种子。
+        srand((double)microtime() * 1000000); // 重置随机数种子。
         $nonce = rand(); // 获取随机数。
-        $timestamp = time()*1000; // 获取时间戳（毫秒）。
+        $timestamp = time() * 1000; // 获取时间戳（毫秒）。
         $signature = sha1($this->appSecret . $nonce . $timestamp);
 
-        if($rc){
+        if ($rc) {
             return [
-                'RC-App-Key' => $this->appKey,
-                'RC-Nonce' => $nonce,
+                'RC-App-Key'   => $this->appKey,
+                'RC-Nonce'     => $nonce,
                 'RC-Timestamp' => $timestamp,
                 'RC-Signature' => $signature
             ];
         }
         return [
-            'App-Key' => $this->appKey,
-            'Nonce' => $nonce,
+            'App-Key'   => $this->appKey,
+            'Nonce'     => $nonce,
             'Timestamp' => $timestamp,
             'Signature' => $signature
         ];
@@ -150,18 +144,18 @@ class Api
     {
         $url = self::$DOMAIN_NAME . $uri . '.json';
 
-        $rst = $this->http->post($url, $param, $this->getSendHeader());
+        $rst = Http::post($url, $param, $this->getSendHeader());
 
-        if($rst === false){
-            $this->errCode = $this->http->getLastErrCode();
-            $this->errMsg = self::$HTTP_CODE_MSG[(string)$this->http->getLastErrCode()];
+        if ($rst === false) {
+            $this->errCode = Http::getLastErrCode();
+            $this->errMsg = self::$HTTP_CODE_MSG[(string)Http::getLastErrCode()];
             return false;
         }
 
         if ($encode) {
             $json = Json::decode($rst);
 
-            if($json === false){
+            if ($json === false) {
                 $this->errCode = '500';
                 $this->errMsg = '解析JSON结果时发生错误';
                 return false;

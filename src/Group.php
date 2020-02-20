@@ -1,13 +1,11 @@
 <?php
+
+namespace fize\third\rongcloud;
+
 /**
  * 群组服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use fize\third\rongcloud\Api;
-
-class Group extends Api
+class Group extends Common
 {
 
     /**
@@ -20,15 +18,15 @@ class Group extends Api
     {
         $uri = '/group/sync';
         $params = "userId={$user_id}";
-        if(!is_null($groups)){
-            foreach ($groups as $id => $name){
+        if (!is_null($groups)) {
+            foreach ($groups as $id => $name) {
                 $params .= "&group[{$id}]={$name}";
             }
         }
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -45,22 +43,22 @@ class Group extends Api
     public function create($user_id, $group_id, $group_name)
     {
         $uri = '/group/create';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = "groupId={$group_id}&groupName={$group_name}";
-            foreach ($user_id as $id){
+            foreach ($user_id as $id) {
                 $params .= "&userId={$id}";
             }
-        }else{
+        } else {
             $params = [
-                'userId' => $user_id,
-                'groupId' => $group_id,
+                'userId'    => $user_id,
+                'groupId'   => $group_id,
                 'groupName' => $group_name
             ];
         }
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -77,22 +75,22 @@ class Group extends Api
     public function join($user_id, $group_id, $group_name)
     {
         $uri = '/group/join';
-        if(is_array($user_id)){
+        if (is_array($user_id)) {
             $params = "groupId={$group_id}&groupName={$group_name}";
-            foreach ($user_id as $id){
+            foreach ($user_id as $id) {
                 $params .= "&userId={$id}";
             }
-        }else{
+        } else {
             $params = [
-                'userId' => $user_id,
-                'groupId' => $group_id,
+                'userId'    => $user_id,
+                'groupId'   => $group_id,
                 'groupName' => $group_name
             ];
         }
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -109,13 +107,13 @@ class Group extends Api
     {
         $uri = '/group/quit';
         $params = [
-            'userId' => $user_id,
+            'userId'  => $user_id,
             'groupId' => $group_id
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -132,13 +130,13 @@ class Group extends Api
     {
         $uri = '/group/dismiss';
         $params = [
-            'userId' => $user_id,
+            'userId'  => $user_id,
             'groupId' => $group_id
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -155,13 +153,13 @@ class Group extends Api
     {
         $uri = '/group/refresh';
         $params = [
-            'groupId' => $group_id,
+            'groupId'   => $group_id,
             'groupName' => $group_name
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 

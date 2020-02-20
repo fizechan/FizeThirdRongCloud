@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\chatroom;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室成员管理
  */
-
-namespace fize\third\rongcloud\api\chatroom;
-
-use fize\third\rongcloud\Api;
-
-class User extends Api
+class User extends Common
 {
     /**
      * 查询聊天室内用户方法
@@ -21,8 +21,8 @@ class User extends Api
         $uri = '/chatroom/user/query';
         $params = [
             'chatroomId' => $chatroom_id,
-            'count' => $count,
-            'order' => $order
+            'count'      => $count,
+            'order'      => $order
         ];
         return $this->httpPost($uri, $params);
     }
@@ -38,12 +38,12 @@ class User extends Api
         $uri = '/chatroom/user/exist';
         $params = [
             'chatroomId' => $chatroom_id,
-            'userId' => $user_id
-            ];
+            'userId'     => $user_id
+        ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -60,12 +60,12 @@ class User extends Api
     {
         $uri = '/chatroom/users/exist';
         $params = "chatroomId={$chatroom_id}";
-        foreach ($user_ids as $user_id){
+        foreach ($user_ids as $user_id) {
             $params .= "&userId={$user_id}";
         }
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

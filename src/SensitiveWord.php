@@ -1,17 +1,16 @@
 <?php
+
+namespace fize\third\rongcloud;
+
+
 /**
  * 敏感词服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use fize\third\rongcloud\Api;
-
-class SensitiveWord extends Api
+class SensitiveWord extends Common
 {
     /**
      * 添加敏感词方法
-     * @param string $word 	敏感词，最长不超过 32 个字符，格式为汉字、数字、字母。
+     * @param string $word 敏感词，最长不超过 32 个字符，格式为汉字、数字、字母。
      * @param string $replace_word 需要替换的敏感词，最长不超过 32 个字符
      * @return bool
      */
@@ -19,13 +18,13 @@ class SensitiveWord extends Api
     {
         $uri = '/sensitiveword/add';
         $params = [
-            'word' => $word,
+            'word'        => $word,
             'replaceWord' => $replace_word
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -46,7 +45,7 @@ class SensitiveWord extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -66,7 +65,7 @@ class SensitiveWord extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -84,7 +83,7 @@ class SensitiveWord extends Api
         $params = ['type' => $type];
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

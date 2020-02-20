@@ -1,13 +1,13 @@
 <?php
+
+namespace fize\third\rongcloud\group;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 群组成员管理方法
  */
-
-namespace fize\third\rongcloud\api\group;
-
-use fize\third\rongcloud\Api;
-
-class User extends Api
+class User extends Common
 {
     /**
      * 查询群成员方法
@@ -23,7 +23,7 @@ class User extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 

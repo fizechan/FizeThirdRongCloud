@@ -1,13 +1,11 @@
 <?php
+
+namespace fize\third\rongcloud;
+
 /**
  * 会话消息免打扰服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use  fize\third\rongcloud\Api;
-
-class Conversation extends Api
+class Conversation extends Common
 {
 
     /**
@@ -23,14 +21,14 @@ class Conversation extends Api
         $uri = '/conversation/notification/set';
         $params = [
             'conversationType' => $conversation_type,
-            'requestId' => $request_id,
-            'targetId' => $target_id,
-            'isMuted' => $is_muted
+            'requestId'        => $request_id,
+            'targetId'         => $target_id,
+            'isMuted'          => $is_muted
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -49,13 +47,13 @@ class Conversation extends Api
         $uri = '/conversation/notification/get';
         $params = [
             'conversationType' => $conversation_type,
-            'requestId' => $request_id,
-            'targetId' => $target_id
+            'requestId'        => $request_id,
+            'targetId'         => $target_id
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

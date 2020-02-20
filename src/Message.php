@@ -1,13 +1,11 @@
 <?php
+
+namespace fize\third\rongcloud;
+
 /**
- * 消息发送服务API
+ * 消息发送服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use fize\third\rongcloud\Api;
-
-class Message extends Api
+class Message extends Common
 {
     public function privatePublish($from_user_id, $to_user_id)
     {
@@ -70,11 +68,11 @@ class Message extends Api
     {
         $uri = '/message/recall';
         $params = [
-            'fromUserId' => $from_user_id,
+            'fromUserId'       => $from_user_id,
             'conversationType' => $conversation_type,
-            'targetId' => $target_id,
-            'messageUID' => $message_uid,
-            'sentTime' => $sent_time
+            'targetId'         => $target_id,
+            'messageUID'       => $message_uid,
+            'sentTime'         => $sent_time
         ];
         return $this->httpPost($uri, $params);
     }

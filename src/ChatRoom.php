@@ -1,13 +1,11 @@
 <?php
+
+namespace fize\third\rongcloud;
+
 /**
  * 聊天室服务
  */
-
-namespace fize\third\rongcloud\api;
-
-use fize\third\rongcloud\Api;
-
-class ChatRoom extends Api
+class ChatRoom extends Common
 {
 
     /**
@@ -19,14 +17,14 @@ class ChatRoom extends Api
     {
         $uri = '/chatroom/create';
         $params = [];
-        foreach ($chatrooms as $id => $name){
+        foreach ($chatrooms as $id => $name) {
             $params[] = "chatroom[{$id}]={$name}";
         }
         $params = implode('&', $params);
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -45,7 +43,7 @@ class ChatRoom extends Api
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -63,7 +61,7 @@ class ChatRoom extends Api
         $params = ['chatroomId' => $chatroom_id];
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 

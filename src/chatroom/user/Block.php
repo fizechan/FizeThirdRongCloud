@@ -1,13 +1,14 @@
 <?php
+
+
+namespace fize\third\rongcloud\chatroom\user;
+
+use fize\third\rongcloud\Common;
+
 /**
  * 聊天室封禁服务
  */
-
-namespace fize\third\rongcloud\api\chatroom\user;
-
-use fize\third\rongcloud\Api;
-
-class Block extends Api
+class Block extends Common
 {
     /**
      * 添加封禁聊天室成员方法
@@ -20,14 +21,14 @@ class Block extends Api
     {
         $uri = '/chatroom/user/block/add';
         $params = [
-            'userId' => $user_id,
+            'userId'     => $user_id,
             'chatroomId' => $chatroom_id,
-            'minute' => $minute
+            'minute'     => $minute
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -44,13 +45,13 @@ class Block extends Api
     {
         $uri = '/chatroom/user/block/rollback';
         $params = [
-            'userId' => $user_id,
+            'userId'     => $user_id,
             'chatroomId' => $chatroom_id
         ];
 
         $rst = $this->httpPost($uri, $params);
 
-        if(isset($rst['code']) && $rst['code'] == 200){
+        if (isset($rst['code']) && $rst['code'] == 200) {
             return true;
         }
 
@@ -68,7 +69,7 @@ class Block extends Api
         $params = ['chatroomId' => $chatroom_id];
         $rst = $this->httpPost($uri, $params);
 
-        if(!isset($rst['code']) || $rst['code'] != 200){
+        if (!isset($rst['code']) || $rst['code'] != 200) {
             return false;
         }
 
