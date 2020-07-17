@@ -2,6 +2,7 @@
 
 namespace fize\third\rongcloud;
 
+use RuntimeException;
 use fize\net\Http;
 use fize\crypt\Json;
 
@@ -22,34 +23,9 @@ class Common
     private $appSecret;
 
     /**
-     * @var int 错误码
-     */
-    private $errCode = 0;
-
-    /**
-     * @var string 错误描述
-     */
-    private $errMsg = "";
-
-    /**
      * @var string API域名
      */
     private static $DOMAIN_NAME = 'http://api.cn.ronghub.com';
-
-    /**
-     * @var array HTTP状态码描述
-     */
-    private static $HTTP_CODE_MSG = [
-        '200' => '成功',
-        '400' => '该请求是无效的，详细的错误信息会说明原因',
-        '401' => '验证失败，详细的错误信息会说明原因',
-        '403' => '被拒绝调用，详细的错误信息会说明原因',
-        '404' => '服务器找不到请求的地址',
-        '405' => '群容量超出上限，禁止调用',
-        '429' => '超出了调用频率限制，详细的错误信息会说明原因',
-        '500' => '服务器内部错误',
-        '504' => '服务器在运行，本次请求响应超时，请稍后重试'
-    ];
 
     /**
      * @var array 业务状态码
@@ -74,8 +50,8 @@ class Common
     ];
 
     /**
-     * Api constructor.
-     * @param string $app_key APP KEY
+     * 构造
+     * @param string $app_key    APP KEY
      * @param string $app_secret APP密钥
      */
     public function __construct($app_key, $app_secret)
@@ -85,23 +61,8 @@ class Common
     }
 
     /**
-     * @return int 取得最后的错误码
-     */
-    public function getErrCode()
-    {
-        return $this->errCode;
-    }
-
-    /**
-     * @return string 取得最后的错误描述
-     */
-    public function getErrMsg()
-    {
-        return $this->errMsg;
-    }
-
-    /**
-     * @param bool $rc
+     * 获取发送头
+     * @param bool $rc 是否RC
      * @return array
      */
     private function getSendHeader($rc = false)
@@ -128,48 +89,41 @@ class Common
     }
 
 
-    protected function httpGet($p_url)
+    protected function httpGet($uri)
     {
         //@todo
     }
 
     /**
      * 核心POST函数
-     * @param string $uri 请求的URI
-     * @param mixed $param 提交的参数，可以是数组或者字符串，如果需要上传文件必须使用数组
-     * @param bool $encode 是否对结果进行JSON编码
-     * @return mixed 成功时返回对应结果，失败时返回false
+     *
+     * 参数 `$param` :
+     *   可以是数组或者字符串，如果需要上传文件必须使用数组
+     * @param string       $uri    请求的URI
+     * @param array|string $param  提交的参数
+     * @param bool         $encode 是否对结果进行JSON编码
+     * @return array|string
      */
     protected function httpPost($uri, $param, $encode = true)
     {
         $url = self::$DOMAIN_NAME . $uri . '.json';
 
-        $rst = Http::post($url, $param, $this->getSendHeader());
-
-        if ($rst === false) {
-            $this->errCode = Http::getLastErrCode();
-            $this->errMsg = self::$HTTP_CODE_MSG[(string)Http::getLastErrCode()];
-            return false;
-        }
+        $content = Http::post($url, $param, $this->getSendHeader());
 
         if ($encode) {
-            $json = Json::decode($rst);
+            $json = Json::decode($content);
 
             if ($json === false) {
-                $this->errCode = '500';
-                $this->errMsg = '解析JSON结果时发生错误';
-                return false;
+                throw new RuntimeException(Json::lastErrorMsg(), Json::lastError());
             }
 
             if (isset($json['code']) && $json['code'] != 200) {
-                $this->errCode = $json['code'];
-                $this->errMsg = self::$BUSINESS_CODE_MSG[(string)$json['code']];
-                return false;
+                throw new Exception(self::$BUSINESS_CODE_MSG[(string)$json['code']], $json['code']);
             }
 
             return $json;
         } else {
-            return $rst;
+            return $content;
         }
     }
 }
